@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ECE Calculator Toolkit</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:linear-gradient(135deg,#eef4ff,#ffffff);
+    margin:30px;
+}
+
+.container{
+    width:760px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.15);
+}
+
+h2{
+    text-align:center;
+}
+
+pre{
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:10px;
+}
+
+input{
+    width:95%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.calc{
+    background:#4CAF50;
+    color:white;
+}
+
+.clear{
+    background:#f44336;
+    color:white;
+}
+
+#result{
+    margin-top:20px;
+    background:#fafafa;
+    padding:15px;
+    border-radius:10px;
+    white-space:pre-wrap;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🧮 ECE Calculator Toolkit</h2>
+
+<pre>
+1.Addition
+2.Subtraction
+3.Multiplication
+4.Division
+5.Modulus
+6.Bitwise And
+7.Bitwise Or
+8.Bitwise Not
+9.Left Shift
+10.Right Shift
+11.Logical And
+12.Logical Or
+13.Logical Not
+14.Decimal to Binary
+15.Decimal to Octal
+16.Decimal to Hexadecimal
+17.Binary to Decimal
+18.Octal to Decimal
+19.Hexadecimal to Decimal
+20.Decimal to BCD
+21.1's Complement
+22.2's Complement
+23.XOR
+24.NAND
+25.NOR
+26.XNOR
+</pre>
+
+<label>Enter Operation Value:</label>
+<input type="number" id="choice" oninput="updateInputs()">
+
+<div id="box1">
+<label>Enter Value 1:</label>
+<input type="text" id="x">
+</div>
+
+<div id="box2">
+<label>Enter Value 2:</label>
+<input type="text" id="y">
+</div>
+
+<div id="shiftBox" style="display:none;">
+<label>Enter number of bits shift:</label>
+<input type="number" id="bits">
+</div>
+
+<button class="calc" onclick="calculate()">Calculate</button>
+<button class="clear" onclick="clearAll()">Clear</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function updateInputs()
+{
+    let choice=Number(document.getElementById("choice").value);
+
+    let box2=document.getElementById("box2");
+    let shiftBox=document.getElementById("shiftBox");
+
+    box2.style.display="block";
+    shiftBox.style.display="none";
+
+    if(
+        choice===8||
+        choice===9||
+        choice===10||
+        choice===13||
+        choice===14||
+        choice===15||
+        choice===16||
+        choice===17||
+        choice===18||
+        choice===19||
+        choice===20||
+        choice===21||
+        choice===22
+    )
+    {
+        box2.style.display="none";
+    }
+
+    if(choice===9||choice===10)
+    {
+        shiftBox.style.display="block";
+    }
+}
+
+function calculate()
+{
+    let choice=Number(document.getElementById("choice").value);
+
+    let x=document.getElementById("x").value;
+    let y=document.getElementById("y").value;
+
+    let a=Number(x);
+    let b=Number(y);
+
+    let steps="";
+
+    switch(choice)
+    {
+        case 1:
+        steps=`Input:
+x=${a}
+y=${b}
+
+Step:
+${a}+${b}
+
+Final Output:
+${a+b}`;
+        break;
+
+        case 2:
+        steps=`Input:
+x=${a}
+y=${b}
+
+Step:
+${a}-${b}
+
+Final Output:
+${a-b}`;
+        break;
+
+        case 3:
+        steps=`Input:
+x=${a}
+y=${b}
+
+Step:
+${a}*${b}
+
+Final Output:
+${a*b}`;
+        break;
+
+        case 4:
+        steps=`Input:
+${a}/${b}
+
+Final Output:
+${a/b}`;
+        break;
+
+        case 5:
+        steps=`Input:
+${a}%${b}
+
+Final Output:
+${a%b}`;
+        break;
+
+        case 6:
+        steps=`Bitwise AND
+
+${a}&${b}
+
+Final Output:
+${a&b}`;
+        break;
+
+        case 7:
+        steps=`Bitwise OR
+
+${a}|${b}
+
+Final Output:
+${a|b}`;
+        break;
+
+        case 8:
+        steps=`Bitwise NOT
+
+~${a}
+
+Final Output:
+${~a}`;
+        break;
+
+        case 9:
+        let bits=Number(document.getElementById("bits").value);
+
+        steps=`Input:
+${a}
+
+Bits=${bits}
+
+${a}<<${bits}
+
+Final Output:
+${a<<bits}`;
+        break;
+
+        case 10:
+        let bits2=Number(document.getElementById("bits").value);
+
+        steps=`Input:
+${a}
+
+Bits=${bits2}
+
+${a}>>${bits2}
+
+Final Output:
+${a>>bits2}`;
+        break;
+
+        case 11:
+        steps=`Logical AND
+
+${a}&&${b}
+
+Final Output:
+${a&&b?1:0}`;
+        break;
+
+        case 12:
+        steps=`Logical OR
+
+${a}||${b}
+
+Final Output:
+${a||b?1:0}`;
+        break;
+
+        case 13:
+        steps=`Logical NOT
+
+!${a}
+
+Final Output:
+${!a}`;
+        break;
+
+        case 14:
+        steps=`Decimal:
+${a}
+
+Binary:
+${a.toString(2)}`;
+        break;
+
+        case 15:
+        steps=`Decimal:
+${a}
+
+Octal:
+${a.toString(8)}`;
+        break;
+
+        case 16:
+        steps=`Decimal:
+${a}
+
+Hexadecimal:
+${a.toString(16).toUpperCase()}`;
+        break;
+
+        case 17:
+        steps=`Binary:
+${x}
+
+Decimal:
+${parseInt(x,2)}`;
+        break;
+
+        case 18:
+        steps=`Octal:
+${x}
+
+Decimal:
+${parseInt(x,8)}`;
+        break;
+
+        case 19:
+        steps=`Hexadecimal:
+${x}
+
+Decimal:
+${parseInt(x,16)}`;
+        break;
+
+        case 20:
+
+        let bcd=
+        a.toString()
+        .split("")
+        .map(d=>Number(d)
+        .toString(2)
+        .padStart(4,"0"))
+        .join(" ");
+
+        steps=`Decimal:
+${a}
+
+BCD:
+${bcd}`;
+        break;
+
+        case 21:
+
+        let ones=
+        x.split("")
+        .map(bit=>bit==="1"?"0":"1")
+        .join("");
+
+        steps=`Binary:
+${x}
+
+1's Complement:
+${ones}`;
+        break;
+
+        case 22:
+
+        let oneComp=
+        x.split("")
+        .map(bit=>bit==="1"?"0":"1")
+        .join("");
+
+        let twoComp=
+        (parseInt(oneComp,2)+1)
+        .toString(2)
+        .padStart(x.length,"0");
+
+        steps=`Binary:
+${x}
+
+1's Complement:
+${oneComp}
+
+Add 1
+
+2's Complement:
+${twoComp}`;
+        break;
+
+        case 23:
+        steps=`XOR
+
+${a}^${b}
+
+Final Output:
+${a^b}`;
+        break;
+
+        case 24:
+        steps=`NAND
+
+AND=${a&b}
+
+Final Output:
+${~(a&b)}`;
+        break;
+
+        case 25:
+        steps=`NOR
+
+OR=${a|b}
+
+Final Output:
+${~(a|b)}`;
+        break;
+
+        case 26:
+        steps=`XNOR
+
+XOR=${a^b}
+
+Final Output:
+${~(a^b)}`;
+        break;
+
+        default:
+        steps="Invalid Operation";
+    }
+
+    document.getElementById("result").innerText=steps;
+}
+
+function clearAll()
+{
+    document.getElementById("choice").value="";
+    document.getElementById("x").value="";
+    document.getElementById("y").value="";
+    document.getElementById("bits").value="";
+    document.getElementById("result").innerText="";
+    document.getElementById("shiftBox").style.display="none";
+    document.getElementById("box2").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
